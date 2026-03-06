@@ -4,6 +4,7 @@ Endpoints for patient query submission, AI draft generation, and staff review/se
 """
 import sys
 import os
+from pathlib import Path
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional, Literal
@@ -17,9 +18,11 @@ from mongo import (
     prescriptions_col, bookings_col, vitals_col
 )
 
-# Add ai-response-suggestions to path
-AI_PIPELINE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ai-response-suggestions")
-sys.path.insert(0, AI_PIPELINE_DIR)
+# Add ai-response-suggestions (located at project root) to path
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+AI_PIPELINE_DIR = PROJECT_ROOT / "ai-response-suggestions"
+if AI_PIPELINE_DIR.exists():
+    sys.path.insert(0, str(AI_PIPELINE_DIR))
 
 from pipeline import run_pipeline
 
