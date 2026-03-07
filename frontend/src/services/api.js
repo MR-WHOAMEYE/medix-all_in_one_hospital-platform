@@ -103,6 +103,16 @@ export const deleteUser = (userId, token) =>
 export const getDoctors = (department) =>
     authApi.get('/auth/doctor-list', { params: department ? { department } : {} });
 
+export const generateOTP = (email, name, token) =>
+    authApi.post(`/auth/otp/generate?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`, null, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+export const verifyOTP = (email, otp, token) =>
+    authApi.post('/auth/otp/verify', { email, otp }, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
 export const getNotifications = (doctorEmail, unreadOnly = false) =>
     authApi.get('/auth/notifications', { params: { doctor_email: doctorEmail, unread_only: unreadOnly } });
 
