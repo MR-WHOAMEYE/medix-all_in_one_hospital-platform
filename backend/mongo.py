@@ -62,6 +62,21 @@ patient_queries_col = mdb["patient_queries"] if mdb is not None else None
 draft_responses_col = mdb["draft_responses"] if mdb is not None else None
 knowledge_base_col = mdb["knowledge_base"] if mdb is not None else None
 
+# Inter-Department Workflow Automation collections
+workflow_templates_col = mdb["workflow_templates"] if mdb is not None else None
+workflow_instances_col = mdb["workflow_instances"] if mdb is not None else None
+workflow_requests_col = mdb["workflow_requests"] if mdb is not None else None
+workflow_logs_col = mdb["workflow_logs"] if mdb is not None else None
+departments_col = mdb["departments"] if mdb is not None else None
+
+# Clinical Decision Support System (CDSS) collections
+cdss_patients_col = mdb["cdss_patients"] if mdb is not None else None
+cdss_vitals_col = mdb["cdss_vitals"] if mdb is not None else None
+cdss_labs_col = mdb["cdss_labs"] if mdb is not None else None
+cdss_medications_col = mdb["cdss_medications"] if mdb is not None else None
+cdss_allergies_col = mdb["cdss_allergies"] if mdb is not None else None
+cdss_alerts_col = mdb["cdss_alerts"] if mdb is not None else None
+
 # Aliases for backward compatibility
 feedback_col = patient_feedback_col  # Alias for admin_api
 profiles_col = patient_profiles_col   # Alias for admin_api

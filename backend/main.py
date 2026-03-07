@@ -7,7 +7,7 @@ from routers import (
     digital_twin, simulation, optimization, sentiment,
     alerts, strategic, financial, assistant, reports, settings,
     auth, patient_api, doctor_api, nurse_api, admin_api, ward_api,
-    response_suggestions
+    response_suggestions, workflow, cdss
 )
 
 app = FastAPI(
@@ -51,6 +51,8 @@ app.include_router(nurse_api.router)
 app.include_router(admin_api.router)
 app.include_router(ward_api.router)
 app.include_router(response_suggestions.router)
+app.include_router(workflow.router)
+app.include_router(cdss.router)
 
 
 @app.get("/")

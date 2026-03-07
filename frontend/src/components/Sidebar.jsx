@@ -11,6 +11,10 @@ import {
     CalendarCheck, User,
     // AI Response Suggestions
     MessageSquareText, Sparkles,
+    // Workflow
+    GitBranch,
+    // CDSS
+    ShieldCheck,
     // Shared
     LogOut
 } from 'lucide-react';
@@ -47,6 +51,12 @@ const allNavItems = [
 
     // ═══ AI RESPONSE SUGGESTIONS (Staff) ═══
     { path: '/response-suggestions', icon: Sparkles, label: 'AI Resp', color: '#8B5CF6', roles: ['admin', 'doctor', 'nurse'] },
+
+    // ═══ WORKFLOW AUTOMATION (Staff) ═══
+    { path: '/workflow', icon: GitBranch, label: 'Workflow', color: '#14B8A6', roles: ['admin', 'doctor', 'nurse'] },
+
+    // ═══ CLINICAL DECISION SUPPORT (Staff) ═══
+    { path: '/cdss', icon: ShieldCheck, label: 'CDSS', color: '#EF4444', roles: ['admin', 'doctor', 'nurse'] },
 ];
 
 export default function Sidebar({ user, onLogout }) {

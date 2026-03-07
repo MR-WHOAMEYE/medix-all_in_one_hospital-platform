@@ -9,6 +9,7 @@ import {
     getPatientQueries, generateDraft, getDrafts, reviewDraft,
     sendDraftResponse, getResponseStats
 } from '../services/api';
+import { sendDraftEmail } from '../utils/emailService';
 
 const CATEGORIES = {
     billing: { label: 'Billing', icon: '💳', color: '#0EA5E9' },
@@ -128,7 +129,20 @@ export default function ResponseSuggestions() {
         if (!selectedDraft) return;
         setSending(true);
         try {
+            // 1. Update backend status
             await sendDraftResponse(selectedDraft.id, { staff_email: user.email || 'staff' });
+
+            // 2. Send actual email via EmailJS
+            await sendDraftEmail({
+                patientName: selectedQuery.patient_name,
+                patientEmail: selectedQuery.patient_email,
+                subject: selectedQuery.subject,
+                category: selectedQuery.category,
+                responseText: editText || selectedDraft.draft_text,
+                staffName: user.name || user.email || 'Hospital Staff',
+                priority: selectedQuery.priority,
+            });
+
             setSelectedDraft(d => ({ ...d, status: 'sent' }));
             setSelectedQuery(null);
             setSelectedDraft(null);

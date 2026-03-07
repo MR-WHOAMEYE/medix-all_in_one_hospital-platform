@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getNotifications, markNotificationRead } from '../services/api';
 import { exportPatientPDF } from '../utils/pdfExport';
+import PatientQRCode from '../components/PatientQRCode';
 
 export default function PatientDashboard() {
     const user = JSON.parse(sessionStorage.getItem('zi_user') || '{}');
@@ -155,6 +156,7 @@ export default function PatientDashboard() {
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
+                    <PatientQRCode user={user} />
                     <button onClick={() => exportPatientPDF({ user, healthScore, appointments, prescriptions, diagnoses, bookings, vitals })} className="px-4 py-2 text-xs font-semibold bg-emerald-500/10 text-emerald-700 rounded-xl hover:bg-emerald-500/20 transition cursor-pointer flex items-center gap-2">
                         <FileText size={14} /> Download Report
                     </button>

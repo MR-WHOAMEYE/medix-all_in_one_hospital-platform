@@ -6,6 +6,7 @@ import KPICard from '../components/KPICard';
 import ChartCard from '../components/ChartCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ExecutiveBanner from './Dashboard/ExecutiveBanner';
+import QRScanner from '../components/QRScanner';
 
 import HealthGauge from './Dashboard/HealthGauge';
 import AIInsightPanel from './Dashboard/AIInsightPanel';
@@ -106,6 +107,13 @@ export default function Dashboard() {
         <div>
             {/* Row 1 — Executive Intelligence Header */}
             <ExecutiveBanner summary={summary} />
+
+            {/* QR Scanner */}
+            <div className="flex justify-end mb-4">
+                <QRScanner onScanSuccess={(data) => {
+                    alert(`Patient Scanned:\n${data.name}\n${data.email}\n${data.department || 'N/A'}`);
+                }} />
+            </div>
 
             {/* Row 3 — Primary KPIs: 4 Equal Columns */}
             <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ${SPACING}`}>

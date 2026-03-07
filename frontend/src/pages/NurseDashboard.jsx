@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 import { exportNursePDF } from '../utils/pdfExport';
+import QRScanner from '../components/QRScanner';
 
 // ─── PROJECT BANNER ────────────────────────────────────────
 const NurseBanner = memo(function NurseBanner({ user, data }) {
@@ -310,8 +311,11 @@ export default function NurseDashboard() {
             {/* 1. PROJECT BANNER */}
             <NurseBanner user={user} data={data} />
 
-            {/* PDF Download */}
-            <div className="flex justify-end mb-4">
+            {/* PDF Download & QR Scanner */}
+            <div className="flex justify-end gap-3 mb-4">
+                <QRScanner onScanSuccess={(data) => {
+                    alert(`Patient Scanned:\n${data.name}\n${data.email}\n${data.department || 'N/A'}`);
+                }} />
                 <button onClick={() => exportNursePDF({ user, data })}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-700 text-white text-sm font-medium hover:bg-teal-800 transition cursor-pointer shadow-sm">
                     <ClipboardList size={15} /> Download Shift Report PDF

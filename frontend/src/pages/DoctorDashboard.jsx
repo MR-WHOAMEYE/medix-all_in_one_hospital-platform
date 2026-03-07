@@ -9,6 +9,7 @@ import {
 import axios from 'axios';
 import { getNotifications, markNotificationRead } from '../services/api';
 import { exportDoctorPDF } from '../utils/pdfExport';
+import QRScanner from '../components/QRScanner';
 
 const WARD_TYPES = ['ICU', 'General', 'Private'];
 
@@ -221,6 +222,11 @@ export default function DoctorDashboard() {
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
+                    <QRScanner onScanSuccess={(data) => {
+                        const match = myPatients.find(p => p.email === data.email);
+                        if (match) loadPatientDetail(match);
+                        else alert(`Patient ${data.name} (${data.email}) is not assigned to you.`);
+                    }} />
                     <button onClick={() => exportDoctorPDF({ user, metrics, myPatients, perf, selectedPatient: sp, diagnoses, prescriptions })} className="px-4 py-2 text-xs font-semibold bg-critical/10 text-critical rounded-xl hover:bg-critical/20 transition cursor-pointer flex items-center gap-2">
                         <Printer size={14} /> Download PDF
                     </button>

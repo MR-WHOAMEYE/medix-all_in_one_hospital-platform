@@ -30,12 +30,14 @@ import AppointmentBooking from './pages/AppointmentBooking';
 import PatientProfile from './pages/PatientProfile';
 import PatientQueries from './pages/PatientQueries';
 import ResponseSuggestions from './pages/ResponseSuggestions';
+import WorkflowAutomation from './pages/WorkflowAutomation';
+import ClinicalDecisionSupport from './pages/ClinicalDecisionSupport';
 
 // Role-based route permissions
 const ROLE_ROUTES = {
-  admin: ['/', '/operations', '/intelligence', '/simulation', '/strategy', '/reports', '/settings', '/admin/users', '/response-suggestions'],
-  doctor: ['/', '/patient-management', '/appointment-management', '/reports', '/response-suggestions'],
-  nurse: ['/', '/patient-vitals', '/register-patient', '/reports', '/response-suggestions'],
+  admin: ['/', '/operations', '/intelligence', '/simulation', '/strategy', '/reports', '/settings', '/admin/users', '/response-suggestions', '/workflow', '/cdss'],
+  doctor: ['/', '/patient-management', '/appointment-management', '/reports', '/response-suggestions', '/workflow', '/cdss'],
+  nurse: ['/', '/patient-vitals', '/register-patient', '/reports', '/response-suggestions', '/workflow', '/cdss'],
   patient: ['/', '/book-appointment', '/profile', '/reports', '/patient-queries'],
 };
 
@@ -99,6 +101,12 @@ export default function App() {
 
           {/* AI Response Suggestions (Staff) */}
           <Route path="/response-suggestions" element={<ProtectedRoute user={user} path="/response-suggestions"><ResponseSuggestions /></ProtectedRoute>} />
+
+          {/* Workflow Automation (Staff) */}
+          <Route path="/workflow" element={<ProtectedRoute user={user} path="/workflow"><WorkflowAutomation /></ProtectedRoute>} />
+
+          {/* Clinical Decision Support (Staff) */}
+          <Route path="/cdss" element={<ProtectedRoute user={user} path="/cdss"><ClinicalDecisionSupport /></ProtectedRoute>} />
 
           {/* Shared */}
           <Route path="/reports" element={<Reports />} />
