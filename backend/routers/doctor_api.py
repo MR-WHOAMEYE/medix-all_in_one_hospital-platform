@@ -35,6 +35,17 @@ class DiagnosisCreate(BaseModel):
 class CaseStatusUpdate(BaseModel):
     status: str  # Open, Under Treatment, Resolved
 
+class ReportCreate(BaseModel):
+    patient_email: Optional[str] = ""
+    patient_name: Optional[str] = ""
+    patient_id: Optional[str] = ""
+    report_type: str  # consultation, lab, imaging, prescription, discharge, referral
+    clinical_summary: Optional[str] = ""
+    doctor_name: str
+    doctor_email: str
+    department: Optional[str] = ""
+    status: str = "draft"  # draft or finalized
+
 class AppointmentAction(BaseModel):
     action: str  # approve, reschedule, cancel
     new_time: Optional[str] = None
@@ -328,6 +339,57 @@ def get_bookings(department: Optional[str] = None, status: Optional[str] = None)
                 "action_note": r.get("action_note", ""),
             }
             for r in results
+        ]
+    }
+
+# ---- Medical Reports ----
+@router.post("/reports")
+def create_report(body: ReportCreate):
+    if medical_reports_col is None:
+        raise HTTPException(status_code=503, detail="Database not available")
+    now = datetime.utcnow().isoformat()
+    doc = {
+        "patient_email": body.patient_email,
+        "patient_name": body.patient_name,
+        "patient_id": body.patient_id,
+        "report_type": body.report_type,
+        "clinical_summary": body.clinical_summary,
+        "doctor_name": body.doctor_name,
+        "doctor_email": body.doctor_email,
+        "department": body.department,
+        "status": body.status,
+        "version": "v1.0",
+        "created_at": now,
+        "updated_at": now,
+    }
+    result = medical_reports_col.insert_one(doc)
+    return {"message": "Report saved", "report_id": str(result.inserted_id), "status": body.status}
+
+@router.put("/reports/{report_id}/finalize")
+def finalize_report(report_id: str):
+    if medical_reports_col is None:
+        raise HTTPException(status_code=503, detail="Database not available")
+    result = medical_reports_col.update_one(
+        {"_id": ObjectId(report_id)},
+        {"$set": {"status": "finalized", "updated_at": datetime.utcnow().isoformat()}}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Report not found")
+    return {"message": "Report finalized"}
+
+@router.get("/reports")
+def get_reports(doctor_email: Optional[str] = None, patient_email: Optional[str] = None):
+    if medical_reports_col is None:
+        raise HTTPException(status_code=503, detail="Database not available")
+    query = {}
+    if doctor_email:
+        query["doctor_email"] = doctor_email
+    if patient_email:
+        query["patient_email"] = patient_email
+    results = list(medical_reports_col.find(query).sort("created_at", -1).limit(50))
+    return {
+        "reports": [
+            {**r, "_id": str(r["_id"])} for r in results
         ]
     }
 

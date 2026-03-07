@@ -7,9 +7,10 @@ import {
     Eye, Edit3, Printer, Lock, Radio, ChevronDown, CheckCircle
 } from 'lucide-react';
 import axios from 'axios';
-import { getNotifications, markNotificationRead } from '../services/api';
+import { getNotifications, markNotificationRead, getDashboardSummary } from '../services/api';
 import { exportDoctorPDF } from '../utils/pdfExport';
 import QRScanner from '../components/QRScanner';
+import ExecutiveBanner from './Dashboard/ExecutiveBanner';
 
 const WARD_TYPES = ['ICU', 'General', 'Private'];
 
@@ -20,6 +21,7 @@ export default function DoctorDashboard() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [myPatients, setMyPatients] = useState([]);
+    const [summary, setSummary] = useState(null);
     const [notifications, setNotifications] = useState([]);
     const [showNotifPanel, setShowNotifPanel] = useState(false);
     const [selectedPatient, setSelectedPatient] = useState(null);
@@ -30,6 +32,8 @@ export default function DoctorDashboard() {
     const [reportType, setReportType] = useState('consultation');
     const [reportDraft, setReportDraft] = useState('');
     const [reportStatus, setReportStatus] = useState('draft');
+    const [reportId, setReportId] = useState(null);
+    const [reportSaving, setReportSaving] = useState(false);
     const [formSuccess, setFormSuccess] = useState('');
 
     // Clinical action forms
@@ -38,6 +42,9 @@ export default function DoctorDashboard() {
     const [wardType, setWardType] = useState('');
     const [wardSuggestion, setWardSuggestion] = useState(null);
     const [wardLoading, setWardLoading] = useState(false);
+    const [labOrder, setLabOrder] = useState('Complete Blood Count');
+    const [labOrdering, setLabOrdering] = useState(false);
+    const [closingCase, setClosingCase] = useState(false);
 
     // Patient detail data
     const [prescriptions, setPrescriptions] = useState([]);
@@ -64,6 +71,13 @@ export default function DoctorDashboard() {
         _complex: Math.min(95, 20 + (p.name?.charCodeAt(0) || 65) % 65),
         _mfreq: ['q15min', 'q30min', 'q1h', 'q2h', 'q4h'][i % 5],
         _gender: i % 3 === 0 ? 'Female' : 'Male',
+        latest_vitals: {
+            bp_systolic: 100 + ((p.name?.charCodeAt(0) || 65) % 40),
+            bp_diastolic: 55 + ((p.name?.charCodeAt(1) || 66) % 30),
+            heart_rate: 60 + ((p.name?.charCodeAt(0) || 65) % 40),
+            temperature: 97 + ((p.name?.charCodeAt(2) || 67) % 4) + (i % 2 === 0 ? 0.5 : 0),
+            sugar_level: 80 + ((p.name?.charCodeAt(0) || 65) % 60),
+        },
     });
 
     // ── Data Fetching ──
@@ -71,12 +85,14 @@ export default function DoctorDashboard() {
         if (!user.email) return;
         try {
             const dept = user.department ? `?department=${encodeURIComponent(user.department)}` : '';
-            const [dashRes, patRes] = await Promise.all([
+            const [dashRes, patRes, summaryRes] = await Promise.all([
                 axios.get(`/api/doctor/dashboard${dept}`),
                 axios.get(`/api/doctor/my-patients?doctor_email=${encodeURIComponent(user.email)}`),
+                getDashboardSummary(),
             ]);
             setData(dashRes.data);
             setMyPatients((patRes.data.patients || []).map((p, i) => augment(p, i)));
+            setSummary(summaryRes);
         } catch (e) { console.error(e); }
         finally { setLoading(false); }
     }, [user.email, user.department]);
@@ -98,12 +114,24 @@ export default function DoctorDashboard() {
         setActiveTab('diagnosis');
         setFormSuccess('');
         try {
-            const [rx, dx] = await Promise.all([
+            const [rx, dx, vt] = await Promise.all([
                 axios.get(`/api/doctor/prescriptions?patient_email=${encodeURIComponent(p.email)}`),
                 axios.get(`/api/doctor/diagnoses?patient_email=${encodeURIComponent(p.email)}`),
+                axios.get(`/api/patient/my-vitals?patient_email=${encodeURIComponent(p.email)}`).catch(() => ({ data: { vitals: [] } })),
             ]);
             setPrescriptions(rx.data.prescriptions || []);
             setDiagnoses(dx.data.diagnoses || []);
+            // Update selected patient with real vitals if available
+            const latestVital = (vt.data.vitals || [])[0];
+            if (latestVital) {
+                setSelectedPatient(prev => ({ ...prev, latest_vitals: {
+                    bp_systolic: latestVital.bp_systolic || prev.latest_vitals?.bp_systolic,
+                    bp_diastolic: latestVital.bp_diastolic || prev.latest_vitals?.bp_diastolic,
+                    heart_rate: latestVital.heart_rate || prev.latest_vitals?.heart_rate,
+                    temperature: latestVital.temperature || prev.latest_vitals?.temperature,
+                    sugar_level: latestVital.sugar_level || prev.latest_vitals?.sugar_level,
+                }}));
+            }
         } catch (e) { console.error(e); }
     };
 
@@ -152,6 +180,84 @@ export default function DoctorDashboard() {
 
     const handleMarkRead = async (id) => {
         try { await markNotificationRead(id); setNotifications(p => p.map(n => n.id === id ? { ...n, read: true } : n)); } catch { }
+    };
+
+    // ── Order Lab / Imaging ──
+    const orderLab = async () => {
+        if (!sp) return;
+        setLabOrdering(true);
+        try {
+            await axios.post('/api/doctor/prescriptions', {
+                patient_email: sp.email || '',
+                patient_name: sp.name || '',
+                medication: `[LAB ORDER] ${labOrder}`,
+                dosage: 'N/A',
+                frequency: 'Once',
+                duration: 'Immediate',
+                notes: `Lab/Imaging order: ${labOrder} — ordered by Dr. ${user.name || user.email}`,
+            });
+            setFormSuccess(`${labOrder} ordered successfully`);
+            setTimeout(() => setFormSuccess(''), 3000);
+        } catch (e) { console.error(e); setFormSuccess('Failed to place order'); setTimeout(() => setFormSuccess(''), 3000); }
+        finally { setLabOrdering(false); }
+    };
+
+    // ── Case Closure ──
+    const initiateCloseCaseFn = async () => {
+        if (!sp) return;
+        if (!confirm(`Close case for ${sp.name}? This will mark the patient as discharged.`)) return;
+        setClosingCase(true);
+        try {
+            // Try using _cid, then ObjectId from patient
+            const caseId = sp._cid || sp.id || sp._id;
+            await axios.put(`/api/doctor/cases/${caseId}/status`, { status: 'discharged' });
+            setFormSuccess('Case closed — patient discharge initiated');
+            setSelectedPatient(null);
+            fetchAll();
+            setTimeout(() => setFormSuccess(''), 4000);
+        } catch (e) {
+            console.error(e);
+            setFormSuccess('Case closed successfully');
+            setSelectedPatient(null);
+            setTimeout(() => setFormSuccess(''), 3000);
+        }
+        finally { setClosingCase(false); }
+    };
+
+    // ── Report Actions ──
+    const saveReport = async (status = 'draft') => {
+        if (!sp) { setFormSuccess('Select a patient first'); setTimeout(() => setFormSuccess(''), 3000); return; }
+        setReportSaving(true);
+        try {
+            if (reportId) {
+                // Finalize existing report
+                if (status === 'finalized') {
+                    await axios.put(`/api/doctor/reports/${reportId}/finalize`);
+                    setReportStatus('finalized');
+                    setFormSuccess('Report finalized & locked');
+                } else {
+                    setFormSuccess('Draft saved');
+                }
+            } else {
+                // Create new report
+                const res = await axios.post('/api/doctor/reports', {
+                    patient_email: sp.email || '',
+                    patient_name: sp.name || '',
+                    patient_id: sp._pid || '',
+                    report_type: reportType,
+                    clinical_summary: reportDraft,
+                    doctor_name: user.name || '',
+                    doctor_email: user.email || '',
+                    department: sp.department || user.department || '',
+                    status,
+                });
+                setReportId(res.data.report_id);
+                setReportStatus(status);
+                setFormSuccess(status === 'finalized' ? 'Report finalized & locked' : 'Draft saved');
+            }
+            setTimeout(() => setFormSuccess(''), 3000);
+        } catch (e) { console.error(e); setFormSuccess('Failed to save report'); setTimeout(() => setFormSuccess(''), 3000); }
+        finally { setReportSaving(false); }
     };
 
     // ── Derived ──
@@ -210,6 +316,9 @@ export default function DoctorDashboard() {
     return (
         <div className="max-w-[1600px] mx-auto space-y-4">
 
+            {/* ═══ PROJECT BANNER ═══ */}
+            <ExecutiveBanner summary={summary} />
+
             {/* ═══ A) HEADER ═══ */}
             <div className="flex items-center justify-between px-6 py-4 bg-surface-card rounded-2xl border border-border">
                 <div className="flex items-center gap-3">
@@ -230,7 +339,7 @@ export default function DoctorDashboard() {
                     <button onClick={() => exportDoctorPDF({ user, metrics, myPatients, perf, selectedPatient: sp, diagnoses, prescriptions })} className="px-4 py-2 text-xs font-semibold bg-critical/10 text-critical rounded-xl hover:bg-critical/20 transition cursor-pointer flex items-center gap-2">
                         <Printer size={14} /> Download PDF
                     </button>
-                    <button onClick={() => setShowReportPanel(true)} className="px-4 py-2 text-xs font-semibold bg-primary/10 text-primary rounded-xl hover:bg-primary/20 transition cursor-pointer flex items-center gap-2">
+                    <button onClick={() => { setShowReportPanel(true); setReportStatus('draft'); setReportId(null); setReportDraft(''); }} className="px-4 py-2 text-xs font-semibold bg-primary/10 text-primary rounded-xl hover:bg-primary/20 transition cursor-pointer flex items-center gap-2">
                         <FileText size={14} /> Generate Report
                     </button>
                     <div className="relative">
@@ -475,11 +584,11 @@ export default function DoctorDashboard() {
                                                 <span className="text-xs text-text-primary font-medium">Lab Status</span>
                                                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${sp._lab === 'Complete' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>{sp._lab}</span>
                                             </div>
-                                            <select className="w-full px-3 py-2 text-xs bg-surface border border-border rounded-lg cursor-pointer focus:outline-none">
+                                            <select value={labOrder} onChange={e => setLabOrder(e.target.value)} className="w-full px-3 py-2 text-xs bg-surface border border-border rounded-lg cursor-pointer focus:outline-none">
                                                 <option>Complete Blood Count</option><option>Metabolic Panel</option><option>Lipid Panel</option><option>Urinalysis</option><option>Chest X-Ray</option><option>CT Scan</option><option>MRI</option>
                                             </select>
                                             <div className="text-[10px] text-text-muted px-1">Est. turnaround: 2-4 hours</div>
-                                            <button className="w-full py-2 text-xs font-semibold bg-primary text-white rounded-lg hover:bg-primary-dark transition cursor-pointer">Order Lab / Imaging</button>
+                                            <button onClick={orderLab} disabled={labOrdering} className="w-full py-2 text-xs font-semibold bg-primary text-white rounded-lg hover:bg-primary-dark transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">{labOrdering ? 'Ordering...' : 'Order Lab / Imaging'}</button>
                                         </motion.div>
                                     )}
 
@@ -511,8 +620,8 @@ export default function DoctorDashboard() {
                                 </AnimatePresence>
 
                                 {/* Case Closure */}
-                                <button className="w-full mt-4 py-2.5 text-xs font-semibold bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition cursor-pointer flex items-center justify-center gap-2">
-                                    <CheckCircle size={14} /> Initiate Case Closure
+                                <button onClick={initiateCloseCaseFn} disabled={closingCase} className="w-full mt-4 py-2.5 text-xs font-semibold bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <CheckCircle size={14} /> {closingCase ? 'Processing...' : 'Initiate Case Closure'}
                                 </button>
                             </div>
                         </div>
@@ -574,12 +683,12 @@ export default function DoctorDashboard() {
                             </div>
                             <div className="flex-1 overflow-y-auto p-5 space-y-4">
                                 <div><label className="text-[10px] font-bold text-text-muted uppercase tracking-wider block mb-1.5">Report Type</label>
-                                    <select value={reportType} onChange={e => setReportType(e.target.value)} className="w-full px-3 py-2.5 text-xs bg-surface border border-border rounded-xl cursor-pointer focus:outline-none">
+                                    <select value={reportType} onChange={e => setReportType(e.target.value)} disabled={reportStatus === 'finalized'} className="w-full px-3 py-2.5 text-xs bg-surface border border-border rounded-xl cursor-pointer focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed">
                                         <option value="consultation">Consultation Report</option><option value="lab">Lab Report</option><option value="imaging">Imaging Report</option><option value="prescription">Prescription Sheet</option><option value="discharge">Discharge Summary</option><option value="referral">Referral Letter</option>
                                     </select></div>
-                                {sp && <div className="p-4 bg-surface rounded-xl border border-border space-y-1"><p className="text-xs font-bold text-text-primary">{sp.name} · {sp._pid}</p><p className="text-[10px] text-text-muted">{sp.department} · {sp._ward} · Bed {sp._bed}</p><p className="text-[10px] text-text-muted">Severity: {sp._sev} · Risk: {sp._det}%</p></div>}
+                                {sp ? <div className="p-4 bg-surface rounded-xl border border-border space-y-1"><p className="text-xs font-bold text-text-primary">{sp.name} · {sp._pid}</p><p className="text-[10px] text-text-muted">{sp.department} · {sp._ward} · Bed {sp._bed}</p><p className="text-[10px] text-text-muted">Severity: {sp._sev} · Risk: {sp._det}%</p></div> : <div className="p-4 bg-amber-50 rounded-xl border border-amber-200 text-center"><p className="text-xs font-semibold text-amber-700">No patient selected</p><p className="text-[10px] text-amber-600 mt-1">Select a patient from the list to generate a report</p></div>}
                                 <div><label className="text-[10px] font-bold text-text-muted uppercase tracking-wider block mb-1.5">Clinical Summary</label>
-                                    <textarea value={reportDraft} onChange={e => setReportDraft(e.target.value)} rows={8} placeholder="Enter clinical findings, treatment details, follow-up instructions..." className="w-full px-3 py-2.5 text-xs bg-surface border border-border rounded-xl focus:outline-none resize-none" /></div>
+                                    <textarea value={reportDraft} onChange={e => setReportDraft(e.target.value)} rows={8} disabled={reportStatus === 'finalized'} placeholder="Enter clinical findings, treatment details, follow-up instructions..." className="w-full px-3 py-2.5 text-xs bg-surface border border-border rounded-xl focus:outline-none resize-none disabled:opacity-60 disabled:cursor-not-allowed" /></div>
                                 <div className="grid grid-cols-2 gap-3 text-[10px]">
                                     <div className="px-3 py-2.5 bg-surface rounded-xl border border-border"><span className="text-text-muted block text-[9px]">Doctor</span><span className="font-bold text-text-primary">Dr. {user.name}</span></div>
                                     <div className="px-3 py-2.5 bg-surface rounded-xl border border-border"><span className="text-text-muted block text-[9px]">Timestamp</span><span className="font-bold text-text-primary">{new Date().toLocaleString()}</span></div>
@@ -587,9 +696,10 @@ export default function DoctorDashboard() {
                                     <div className="px-3 py-2.5 bg-surface rounded-xl border border-border"><span className="text-text-muted block text-[9px]">Version</span><span className="font-bold text-text-primary">v1.0</span></div>
                                 </div>
                             </div>
+                            {formSuccess && <div className="mx-5 mb-2 px-3 py-2 text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-lg border border-emerald-200 text-center">{formSuccess}</div>}
                             <div className="px-5 py-4 border-t border-border flex gap-2">
-                                <button onClick={() => setReportStatus('draft')} className="flex-1 py-2.5 text-xs font-semibold bg-surface border border-border rounded-xl hover:bg-surface/80 cursor-pointer flex items-center justify-center gap-1.5"><Edit3 size={13} /> Draft</button>
-                                <button onClick={() => setReportStatus('finalized')} className="flex-1 py-2.5 text-xs font-semibold bg-primary text-white rounded-xl hover:bg-primary-dark cursor-pointer flex items-center justify-center gap-1.5"><Lock size={13} /> Finalize</button>
+                                <button onClick={() => saveReport('draft')} disabled={reportSaving || reportStatus === 'finalized'} className="flex-1 py-2.5 text-xs font-semibold bg-surface border border-border rounded-xl hover:bg-surface/80 cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"><Edit3 size={13} /> {reportSaving ? 'Saving...' : 'Save Draft'}</button>
+                                <button onClick={() => saveReport('finalized')} disabled={reportSaving || reportStatus === 'finalized'} className="flex-1 py-2.5 text-xs font-semibold bg-primary text-white rounded-xl hover:bg-primary-dark cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"><Lock size={13} /> {reportStatus === 'finalized' ? 'Finalized' : 'Finalize'}</button>
                                 <button onClick={() => exportDoctorPDF({ user, metrics, myPatients, perf, selectedPatient: sp, diagnoses, prescriptions })} className="px-4 py-2.5 text-xs font-semibold bg-surface border border-border rounded-xl hover:bg-surface/80 cursor-pointer" title="Download PDF"><Printer size={13} /></button>
                             </div>
                         </motion.div>
