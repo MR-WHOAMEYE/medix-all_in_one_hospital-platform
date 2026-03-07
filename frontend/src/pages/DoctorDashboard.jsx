@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 import { getNotifications, markNotificationRead } from '../services/api';
+import { exportDoctorPDF } from '../utils/pdfExport';
 
 const WARD_TYPES = ['ICU', 'General', 'Private'];
 
@@ -220,6 +221,9 @@ export default function DoctorDashboard() {
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
+                    <button onClick={() => exportDoctorPDF({ user, metrics, myPatients, perf, selectedPatient: sp, diagnoses, prescriptions })} className="px-4 py-2 text-xs font-semibold bg-critical/10 text-critical rounded-xl hover:bg-critical/20 transition cursor-pointer flex items-center gap-2">
+                        <Printer size={14} /> Download PDF
+                    </button>
                     <button onClick={() => setShowReportPanel(true)} className="px-4 py-2 text-xs font-semibold bg-primary/10 text-primary rounded-xl hover:bg-primary/20 transition cursor-pointer flex items-center gap-2">
                         <FileText size={14} /> Generate Report
                     </button>
@@ -580,7 +584,7 @@ export default function DoctorDashboard() {
                             <div className="px-5 py-4 border-t border-border flex gap-2">
                                 <button onClick={() => setReportStatus('draft')} className="flex-1 py-2.5 text-xs font-semibold bg-surface border border-border rounded-xl hover:bg-surface/80 cursor-pointer flex items-center justify-center gap-1.5"><Edit3 size={13} /> Draft</button>
                                 <button onClick={() => setReportStatus('finalized')} className="flex-1 py-2.5 text-xs font-semibold bg-primary text-white rounded-xl hover:bg-primary-dark cursor-pointer flex items-center justify-center gap-1.5"><Lock size={13} /> Finalize</button>
-                                <button className="px-4 py-2.5 text-xs font-semibold bg-surface border border-border rounded-xl hover:bg-surface/80 cursor-pointer"><Printer size={13} /></button>
+                                <button onClick={() => exportDoctorPDF({ user, metrics, myPatients, perf, selectedPatient: sp, diagnoses, prescriptions })} className="px-4 py-2.5 text-xs font-semibold bg-surface border border-border rounded-xl hover:bg-surface/80 cursor-pointer" title="Download PDF"><Printer size={13} /></button>
                             </div>
                         </motion.div>
                     </motion.div>

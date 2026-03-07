@@ -7,6 +7,7 @@ import {
     LogOut, UserPlus, Building2, BedDouble, Pill
 } from 'lucide-react';
 import axios from 'axios';
+import { exportNursePDF } from '../utils/pdfExport';
 
 // ─── PROJECT BANNER ────────────────────────────────────────
 const NurseBanner = memo(function NurseBanner({ user, data }) {
@@ -308,6 +309,14 @@ export default function NurseDashboard() {
         <div className="min-h-screen text-text-primary pb-24">
             {/* 1. PROJECT BANNER */}
             <NurseBanner user={user} data={data} />
+
+            {/* PDF Download */}
+            <div className="flex justify-end mb-4">
+                <button onClick={() => exportNursePDF({ user, data })}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-700 text-white text-sm font-medium hover:bg-teal-800 transition cursor-pointer shadow-sm">
+                    <ClipboardList size={15} /> Download Shift Report PDF
+                </button>
+            </div>
 
             {/* 2. MAIN GRID */}
             <div className="grid grid-cols-12 gap-4">
