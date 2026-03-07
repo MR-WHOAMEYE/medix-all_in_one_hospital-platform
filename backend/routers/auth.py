@@ -10,6 +10,8 @@ import bcrypt
 import jwt
 import os
 import csv
+import random
+import string
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
@@ -37,10 +39,16 @@ class RegisterRequest(BaseModel):
     email: str
     password: Optional[str] = None
     role: str  # admin, doctor, nurse, patient
+    phone: Optional[str] = None                # patient phone number (used as password)
     department: Optional[str] = None
     assigned_doctor: Optional[str] = None      # doctor email
     assigned_doctor_name: Optional[str] = None # doctor display name
     issue: Optional[str] = None                # patient issue / reason
+
+
+class OTPVerifyRequest(BaseModel):
+    email: str
+    otp: str
 
 class UserResponse(BaseModel):
     id: str
@@ -227,8 +235,11 @@ def register(request: RegisterRequest, current_user: dict = Depends(_get_current
     if users_collection.find_one({"email": request.email}):
         raise HTTPException(status_code=409, detail="Email already registered")
 
-    # Auto-generate password if not provided (nurse registering patient)
-    raw_password = request.password or "patient123"
+    # For patients: use phone number as password, else fallback
+    if request.role == "patient" and request.phone:
+        raw_password = request.phone
+    else:
+        raw_password = request.password or "patient123"
 
     user_doc = {
         "name": request.name,
@@ -240,6 +251,8 @@ def register(request: RegisterRequest, current_user: dict = Depends(_get_current
         "created_by": current_user["email"],
     }
     # Store patient-specific fields
+    if request.phone:
+        user_doc["phone"] = request.phone
     if request.assigned_doctor:
         user_doc["assigned_doctor"] = request.assigned_doctor
     if request.assigned_doctor_name:
@@ -281,6 +294,82 @@ def register(request: RegisterRequest, current_user: dict = Depends(_get_current
             "issue": request.issue,
         }
     }
+
+
+# ---------- OTP Generation & Verification ----------
+def _generate_otp(length: int = 6) -> str:
+    """Generate a numeric OTP."""
+    return "".join(random.choices(string.digits, k=length))
+
+
+@router.post("/otp/generate")
+def generate_otp(email: str, name: str, current_user: dict = Depends(_get_current_user)):
+    """Generate an OTP for patient email verification. Called by nurse/doctor/admin."""
+    from mongo import otp_col
+
+    if otp_col is None:
+        raise HTTPException(status_code=503, detail="Database not available")
+
+    if current_user["role"] not in ["admin", "doctor", "nurse"]:
+        raise HTTPException(status_code=403, detail="Only staff can generate OTPs")
+
+    otp_code = _generate_otp()
+
+    # Upsert: one active OTP per email
+    otp_col.update_one(
+        {"email": email},
+        {"$set": {
+            "email": email,
+            "name": name,
+            "otp": otp_code,
+            "verified": False,
+            "created_at": datetime.utcnow().isoformat(),
+            "expires_at": (datetime.utcnow() + timedelta(minutes=10)).isoformat(),
+            "generated_by": current_user["email"],
+        }},
+        upsert=True,
+    )
+
+    return {
+        "message": "OTP generated",
+        "otp_code": otp_code,
+        "email": email,
+        "expires_in_minutes": 10,
+    }
+
+
+@router.post("/otp/verify")
+def verify_otp(request: OTPVerifyRequest, current_user: dict = Depends(_get_current_user)):
+    """Verify an OTP entered by the nurse for a patient's email."""
+    from mongo import otp_col
+
+    if otp_col is None:
+        raise HTTPException(status_code=503, detail="Database not available")
+
+    if current_user["role"] not in ["admin", "doctor", "nurse"]:
+        raise HTTPException(status_code=403, detail="Only staff can verify OTPs")
+
+    record = otp_col.find_one({"email": request.email, "verified": False})
+    if not record:
+        raise HTTPException(status_code=404, detail="No pending OTP found for this email")
+
+    # Check expiry
+    expires_at = datetime.fromisoformat(record["expires_at"])
+    if datetime.utcnow() > expires_at:
+        raise HTTPException(status_code=410, detail="OTP has expired. Please generate a new one.")
+
+    # Verify OTP
+    if record["otp"] != request.otp:
+        raise HTTPException(status_code=400, detail="Invalid OTP code")
+
+    # Mark as verified
+    otp_col.update_one(
+        {"email": request.email},
+        {"$set": {"verified": True, "verified_at": datetime.utcnow().isoformat()}}
+    )
+
+    return {"message": "Email verified successfully", "email": request.email}
+
 
 @router.get("/users")
 def list_users(current_user: dict = Depends(_get_current_user)):

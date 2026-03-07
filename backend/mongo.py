@@ -77,6 +77,9 @@ cdss_medications_col = mdb["cdss_medications"] if mdb is not None else None
 cdss_allergies_col = mdb["cdss_allergies"] if mdb is not None else None
 cdss_alerts_col = mdb["cdss_alerts"] if mdb is not None else None
 
+# OTP verification
+otp_col = mdb["otps"] if mdb is not None else None
+
 # Aliases for backward compatibility
 feedback_col = patient_feedback_col  # Alias for admin_api
 profiles_col = patient_profiles_col   # Alias for admin_api
