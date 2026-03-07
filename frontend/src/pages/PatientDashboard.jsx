@@ -9,15 +9,17 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { getNotifications, markNotificationRead } from '../services/api';
+import { getNotifications, markNotificationRead, getDashboardSummary } from '../services/api';
 import { exportPatientPDF } from '../utils/pdfExport';
 import PatientQRCode from '../components/PatientQRCode';
+import ExecutiveBanner from './Dashboard/ExecutiveBanner';
 
 export default function PatientDashboard() {
     const user = JSON.parse(sessionStorage.getItem('zi_user') || '{}');
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
+    const [summary, setSummary] = useState(null);
     const [appointments, setAppointments] = useState({ total: 0, attended: 0, missed: 0, appointments: [] });
     const [prescriptions, setPrescriptions] = useState([]);
     const [diagnoses, setDiagnoses] = useState([]);
@@ -62,7 +64,8 @@ export default function PatientDashboard() {
 
     useEffect(() => {
         fetchAll(); fetchNotifs();
-        const iv = setInterval(() => { fetchAll(); fetchNotifs(); }, 45000);
+        getDashboardSummary().then(setSummary).catch(console.error);
+        const iv = setInterval(() => { fetchAll(); fetchNotifs(); getDashboardSummary().then(setSummary).catch(console.error); }, 45000);
         return () => clearInterval(iv);
     }, [fetchAll, fetchNotifs]);
 
@@ -141,6 +144,9 @@ export default function PatientDashboard() {
 
     return (
         <div className="max-w-[1400px] mx-auto space-y-4">
+
+            {/* ═══ PROJECT BANNER ═══ */}
+            <ExecutiveBanner summary={summary} />
 
             {/* ═══ HEADER ═══ */}
             <div className="flex items-center justify-between px-6 py-4 bg-surface-card rounded-2xl border border-border">
