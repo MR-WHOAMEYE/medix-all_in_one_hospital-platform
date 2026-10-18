@@ -118,10 +118,30 @@ async function loginAndCapture(config) {
     await page.goto(BASE_URL, { waitUntil: 'networkidle2', timeout: 60000 });
     await settle(page);
 
-    const emailInput = await page.$('input[type="email"], input[name="email"]');
-    const passwordInput = await page.$('input[type="password"], input[name="password"]');
+    // LoginPage.jsx uses type="text" for the email field and has no name attribute.
+    // Prefer its email-like placeholder, then fall back to visible text inputs.
+    const emailInput =
+      await page.$('input[placeholder*="@"]') ||
+      await page.$('input[type="email"]') ||
+      await page.$('input[name="email"]') ||
+      await page.$('input[autocomplete="username"]') ||
+      await page.$('input[type="text"]');
+    const passwordInput =
+      await page.$('input[type="password"]') ||
+      await page.$('input[name="password"]') ||
+      await page.$('input[autocomplete="current-password"]');
+
     if (!emailInput || !passwordInput) {
-      console.warn(`Login inputs not found for ${config.role}; skipping this role.`);
+      const inputDetails = await page.$eval('input', inputs =>
+        inputs.map(input => ({
+          type: input.type,
+          name: input.name,
+          placeholder: input.placeholder,
+          ariaLabel: input.getAttribute('aria-label'),
+          visible: Boolean(input.getClientRects().length),
+        }))
+      ).catch(() => []);
+      console.warn(`Login inputs not found for ${config.role}. Inputs detected: ${JSON.stringify(inputDetails)}`);
       return { role: config.role, status: 'failed-login-fields-not-found', files: [] };
     }
 
