@@ -1,0 +1,30 @@
+{
+  "baseUrl": "https://medix-15sd.vercel.app",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "note": "SVG outputs embed exact screenshot pixels. They are not editable vector UI reconstructions.",
+  "results": [
+    {
+      "role": "admin",
+      "status": "failed-login-fields-not-found",
+      "files": []
+    },
+    {
+      "role": "doctor",
+      "status": "failed-login-fields-not-found",
+      "files": []
+    },
+    {
+      "role": "nurse",
+      "status": "failed-login-fields-not-found",
+      "files": []
+    },
+    {
+      "role": "patient",
+      "status": "failed-login-fields-not-found",
+      "files": []
+    }
+  ]
+}
