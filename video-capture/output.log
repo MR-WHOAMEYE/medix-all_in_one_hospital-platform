@@ -1,0 +1,15 @@
+> capture
+> node capture.mjs
+
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\01-login.png + .svg
+Login inputs not found for admin; skipping this role.
+Login inputs not found for doctor; skipping this role.
+Login inputs not found for nurse; skipping this role.
+Login inputs not found for patient; skipping this role.
+
+Capture summary:
+- admin: failed-login-fields-not-found (0 screens)
+- doctor: failed-login-fields-not-found (0 screens)
+- nurse: failed-login-fields-not-found (0 screens)
+- patient: failed-login-fields-not-found (0 screens)
+Output directory: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures
