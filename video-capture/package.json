@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "capture": "node capture.mjs"
+    "capture": "node capture.mjs",
+    "convert-svg": "node convert-to-svg.mjs"
   },
   "dependencies": {
     "puppeteer": "^24.20.0"
