@@ -30,6 +30,8 @@ const manifest = { source: BASE_URL, format: 'SVG with XHTML foreignObject', wid
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 const esc = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+const escXmlText = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 async function exportPage(page, role, name) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await wait(WAIT_MS);
@@ -53,12 +55,14 @@ async function exportPage(page, role, name) {
     }).filter(h => h.width > 0 && h.height > 0 && h.x < width && h.y < height);
     const base = document.createElement('base'); base.href = location.origin + '/';
     const root = clone.querySelector(':scope > #root');
-    const markup = clone.innerHTML;
+    const serializer = new XMLSerializer();
+    // Serialize cloned DOM as XML so foreignObject content remains well-formed.
+    const markup = Array.from(clone.childNodes).map(node => serializer.serializeToString(node)).join('');
     return { css: css.join('\n'), markup, hotspots, title: document.title, base: base.href, url: location.href };
   }, { width: WIDTH, height: HEIGHT });
 
   const xhtml = '<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+WIDTH+'px;height:'+HEIGHT+'px;overflow:hidden;background:#f8fafc">' +
-    '<base href="'+esc(result.base)+'"/><style>'+result.css+' html,body{margin:0!important;width:'+WIDTH+'px!important;height:'+HEIGHT+'px!important;overflow:hidden!important} body{font-family:Inter,ui-sans-serif,system-ui,sans-serif} #root{min-height:100vh}</style>' +
+    '<base href="'+esc(result.base)+'"/><style>'+escXmlText(result.css+' html,body{margin:0!important;width:'+WIDTH+'px!important;height:'+HEIGHT+'px!important;overflow:hidden!important} body{font-family:Inter,ui-sans-serif,system-ui,sans-serif} #root{min-height:100vh}')+'</style>' +
     result.markup + '</div>';
   const overlay = result.hotspots.map(h =>
     '<g id="'+esc(h.id)+'" data-label="'+esc(h.label)+'" class="medix-click-target" tabindex="0" role="button" aria-label="'+esc(h.label)+'">' +
