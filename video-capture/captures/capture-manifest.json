@@ -8,23 +8,55 @@
   "results": [
     {
       "role": "admin",
-      "status": "failed-login-fields-not-found",
-      "files": []
+      "status": "completed",
+      "files": [
+        "02-admin-dashboard",
+        "03-operations",
+        "04-intelligence",
+        "05-simulation",
+        "06-strategy",
+        "07-reports",
+        "18-ai-response-suggestions",
+        "19-workflow-automation",
+        "20-clinical-decision-support"
+      ]
     },
     {
       "role": "doctor",
-      "status": "failed-login-fields-not-found",
-      "files": []
+      "status": "completed",
+      "files": [
+        "08-doctor-dashboard",
+        "09-patient-management",
+        "10-appointment-management",
+        "07-reports",
+        "18-ai-response-suggestions",
+        "19-workflow-automation",
+        "20-clinical-decision-support"
+      ]
     },
     {
       "role": "nurse",
-      "status": "failed-login-fields-not-found",
-      "files": []
+      "status": "completed",
+      "files": [
+        "11-nurse-dashboard",
+        "12-register-patient",
+        "13-patient-vitals",
+        "07-reports",
+        "18-ai-response-suggestions",
+        "19-workflow-automation",
+        "20-clinical-decision-support"
+      ]
     },
     {
       "role": "patient",
-      "status": "failed-login-fields-not-found",
-      "files": []
+      "status": "completed",
+      "files": [
+        "14-patient-dashboard",
+        "15-book-appointment",
+        "16-patient-profile",
+        "17-patient-queries",
+        "07-reports"
+      ]
     }
   ]
 }

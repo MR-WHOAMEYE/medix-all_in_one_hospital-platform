@@ -1,15 +1,98 @@
+= $env:MEDIX_ADMIN_EMAIL = "admin@hospital.ai"
+>> $env:MEDIX_ADMIN_PASSWORD = "admin123"
+>> 
+>> $env:MEDIX_DOCTOR_EMAIL = "kumar-52@hospital.ai"
+>> $env:MEDIX_DOCTOR_PASSWORD = "password123"
+>> 
+>> $env:MEDIX_NURSE_EMAIL = "rekha-5@hospital.ai"
+>> $env:MEDIX_NURSE_PASSWORD = "password123"
+>> 
+>> $env:MEDIX_PATIENT_EMAIL = "balapragalyanm@gmail.com
+>> "
+>> $env:MEDIX_PATIENT_PASSWORD = "1234567890"
+>> 
+>> $env:OUT_DIR = ".\captures"
+>> $env:WIDTH = "1920"
+>> $env:HEIGHT = "1080"
+>> 
+>> npm run capture
+
 > capture
 > node capture.mjs
 
 Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\01-login.png + .svg
-Login inputs not found for admin; skipping this role.
-Login inputs not found for doctor; skipping this role.
-Login inputs not found for nurse; skipping this role.
-Login inputs not found for patient; skipping this role.
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\admin\02-admin-dashboard.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\admin\03-operations.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\admin\04-intelligence.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\admin\05-simulation.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\admin\06-strategy.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\admin\07-reports.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\admin\18-ai-response-suggestions.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\admin\19-workflow-automation.png+ .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\admin\20-clinical-decision-support.png + .svg
+[doctor console] Failed to load resource: the server responded with a status of 410 ()
+[doctor console] AxiosError: Request failed with status code 410
+[doctor console] Failed to load resource: the server responded with a status of 410 ()
+[doctor console] Failed to load resource: the server responded with a status of 410 ()
+[doctor console] AxiosError: Request failed with status code 410
+[doctor console] Failed to load resource: the server responded with a status of 410 ()
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\doctor\08-doctor-dashboard.png +.svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\doctor\09-patient-management.png+ .svg
+[doctor console] Failed to load resource: the server responded with a status of 410 ()
+[doctor console] AxiosError: Request failed with status code 410
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\doctor\10-appointment-management.png + .svg
+[doctor console] Failed to load resource: the server responded with a status of 410 ()
+[doctor console] AxiosError: Request failed with status code 410
+[doctor console] Failed to load resource: the server responded with a status of 410 ()
+[doctor console] Failed to load resource: the server responded with a status of 410 ()
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\doctor\07-reports.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\doctor\18-ai-response-suggestions.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\doctor\19-workflow-automation.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\doctor\20-clinical-decision-support.png + .svg
+[nurse console] Failed to load resource: the server responded with a status of 410 ()
+[nurse console] AxiosError: Request failed with status code 410
+[nurse console] Failed to load resource: the server responded with a status of 410 ()
+[nurse console] AxiosError: Request failed with status code 410
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\nurse\11-nurse-dashboard.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\nurse\12-register-patient.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\nurse\13-patient-vitals.png + .svg
+[nurse console] Failed to load resource: the server responded with a status of 410 ()
+[nurse console] AxiosError: Request failed with status code 410
+[nurse console] Failed to load resource: the server responded with a status of 410 ()
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\nurse\07-reports.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\nurse\18-ai-response-suggestions.png + .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\nurse\19-workflow-automation.png+ .svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\nurse\20-clinical-decision-support.png + .svg
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] AxiosError: Request failed with status code 410
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] AxiosError: Request failed with status code 410
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\patient\14-patient-dashboard.png+ .svg
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] AxiosError: Request failed with status code 410
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\patient\15-book-appointment.png + .svg
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] AxiosError: Request failed with status code 410
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\patient\16-patient-profile.png +.svg
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\patient\17-patient-queries.png +.svg
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] AxiosError: Request failed with status code 410
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+[patient console] Failed to load resource: the server responded with a status of 410 ()
+Captured: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures\patient\07-reports.png + .svg
 
 Capture summary:
-- admin: failed-login-fields-not-found (0 screens)
-- doctor: failed-login-fields-not-found (0 screens)
-- nurse: failed-login-fields-not-found (0 screens)
-- patient: failed-login-fields-not-found (0 screens)
+- admin: completed (9 screens)
+- doctor: completed (7 screens)
+- nurse: completed (7 screens)
+- patient: completed (5 screens)
 Output directory: C:\Users\thara\vit-hackathon\vithack\Zero_Intercept\video-capture\captures
