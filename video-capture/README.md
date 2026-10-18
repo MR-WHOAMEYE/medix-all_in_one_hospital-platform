@@ -93,3 +93,34 @@ npm run validate-svg
 ```
 
 The validator checks XML parsing, SVG root/dimensions, embedded `foreignObject`, hotspot groups, and attempts to render each SVG in Chromium. It writes `svg-pages/validation-report.json` and PNG previews to `svg-pages/validation-previews/`. Open the PNG previews to visually inspect layout, fonts, images, and clipping. A syntactically valid SVG can still look wrong in an editor that does not support `foreignObject`.
+
+
+## 6. Render the cinematic promo with Remotion
+
+A 20-second, 1920×1080, 30 fps Remotion composition uses the generated SVG screens for a cinematic product showcase: controlled camera push-ins, slight perspective, dark navy/teal lighting, staggered title reveals, transitions, and a branded end card. The composition references the SVGs already generated in `video-capture/svg-pages/`; do not move the assets.
+
+From the repository root:
+
+```powershell
+cd video-capture/remotion
+npm install
+npm run studio
+```
+
+Render the MP4:
+
+```powershell
+npm run render
+```
+
+Output: `video-capture/remotion/out/medix-cinematic.mp4`.
+
+Render a poster frame:
+
+```powershell
+npm run still
+```
+
+Output: `video-capture/remotion/out/medix-poster.png`.
+
+The video uses the existing `svg-pages/*.svg` assets directly. Because those files contain XHTML inside SVG `foreignObject`, Chromium/Remotion is the intended renderer; other video or design tools may flatten or omit that embedded HTML. Preview the composition in Remotion Studio before final delivery. The MP4 is generated on the machine running the render command and is not committed to Git.
