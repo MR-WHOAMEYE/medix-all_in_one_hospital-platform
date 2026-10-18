@@ -1,0 +1,709 @@
+{
+  "checkedAt": "2026-10-18T18:58:28.377Z",
+  "directory": "C:\\Users\\thara\\vit-hackathon\\vithack\\Zero_Intercept\\video-capture\\svg-pages",
+  "total": 28,
+  "passed": 0,
+  "needsReview": 28,
+  "results": [
+    {
+      "file": "admin-clinical-decision-support.svg",
+      "bytes": 152294,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 750: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-dashboard.svg",
+      "bytes": 185331,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 718: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-intelligence.svg",
+      "bytes": 169951,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 724: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-operations.svg",
+      "bytes": 237088,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 720: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-reports.svg",
+      "bytes": 130761,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 714: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-response-suggestions.svg",
+      "bytes": 157067,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 740: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-settings.svg",
+      "bytes": 151535,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 716: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-simulation.svg",
+      "bytes": 135779,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 720: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-strategy.svg",
+      "bytes": 168376,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 716: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-users.svg",
+      "bytes": 396678,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 710: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "admin-workflow.svg",
+      "bytes": 140349,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 716: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "doctor-appointment-management.svg",
+      "bytes": 130273,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 746: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "doctor-clinical-decision-support.svg",
+      "bytes": 146169,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 752: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "doctor-dashboard.svg",
+      "bytes": 143349,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 720: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "doctor-patient-management.svg",
+      "bytes": 127494,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 738: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "doctor-reports.svg",
+      "bytes": 124251,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 716: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "doctor-response-suggestions.svg",
+      "bytes": 150942,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 742: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "doctor-workflow.svg",
+      "bytes": 131598,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 718: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "nurse-dashboard.svg",
+      "bytes": 124076,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 718: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "nurse-patient-vitals.svg",
+      "bytes": 131854,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 728: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "nurse-register-patient.svg",
+      "bytes": 137150,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 732: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "nurse-reports.svg",
+      "bytes": 124045,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 714: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "patient-book-appointment.svg",
+      "bytes": 127723,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 736: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "patient-dashboard.svg",
+      "bytes": 146910,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 722: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "patient-patient-queries.svg",
+      "bytes": 129533,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 734: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "patient-profile.svg",
+      "bytes": 130526,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 718: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "patient-reports.svg",
+      "bytes": 128124,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 718: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    },
+    {
+      "file": "public-login.svg",
+      "bytes": 118067,
+      "xmlWellFormed": false,
+      "svgRoot": false,
+      "hasForeignObject": true,
+      "hotspotCount": 0,
+      "imageCount": 0,
+      "renderLoaded": false,
+      "errors": [
+        "XML parse error: This page contains the following errors:error on line 2 at column 712: Unexpected token inside entity: =Below is a rendering of the page up to the first error.",
+        "Root element is not <svg>.",
+        "Missing SVG dimensions or viewBox.",
+        "No interactive hotspot groups found."
+      ],
+      "dimensions": {
+        "width": "",
+        "height": "",
+        "viewBox": ""
+      },
+      "hasTitle": true,
+      "runtimeErrors": [],
+      "failedRequests": [],
+      "status": "CHECK"
+    }
+  ]
+}
