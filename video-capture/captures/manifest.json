@@ -1,0 +1,232 @@
+{
+  "source": "https://medix-15sd.vercel.app",
+  "format": "SVG with XHTML foreignObject",
+  "width": 1920,
+  "height": 1080,
+  "pages": [
+    {
+      "role": "public",
+      "name": "login",
+      "url": "https://medix-15sd.vercel.app/",
+      "file": "public-login.svg",
+      "interactiveTargets": 4,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "dashboard",
+      "url": "https://medix-15sd.vercel.app/",
+      "file": "admin-dashboard.svg",
+      "interactiveTargets": 14,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "operations",
+      "url": "https://medix-15sd.vercel.app/operations",
+      "file": "admin-operations.svg",
+      "interactiveTargets": 16,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "intelligence",
+      "url": "https://medix-15sd.vercel.app/intelligence",
+      "file": "admin-intelligence.svg",
+      "interactiveTargets": 16,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "simulation",
+      "url": "https://medix-15sd.vercel.app/simulation",
+      "file": "admin-simulation.svg",
+      "interactiveTargets": 16,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "strategy",
+      "url": "https://medix-15sd.vercel.app/strategy",
+      "file": "admin-strategy.svg",
+      "interactiveTargets": 19,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "reports",
+      "url": "https://medix-15sd.vercel.app/reports",
+      "file": "admin-reports.svg",
+      "interactiveTargets": 13,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "settings",
+      "url": "https://medix-15sd.vercel.app/settings",
+      "file": "admin-settings.svg",
+      "interactiveTargets": 21,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "users",
+      "url": "https://medix-15sd.vercel.app/admin/users",
+      "file": "admin-users.svg",
+      "interactiveTargets": 32,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "response-suggestions",
+      "url": "https://medix-15sd.vercel.app/response-suggestions",
+      "file": "admin-response-suggestions.svg",
+      "interactiveTargets": 25,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "workflow",
+      "url": "https://medix-15sd.vercel.app/workflow",
+      "file": "admin-workflow.svg",
+      "interactiveTargets": 22,
+      "status": "exported"
+    },
+    {
+      "role": "admin",
+      "name": "clinical-decision-support",
+      "url": "https://medix-15sd.vercel.app/cdss",
+      "file": "admin-clinical-decision-support.svg",
+      "interactiveTargets": 27,
+      "status": "exported"
+    },
+    {
+      "role": "doctor",
+      "name": "dashboard",
+      "url": "https://medix-15sd.vercel.app/",
+      "file": "doctor-dashboard.svg",
+      "interactiveTargets": 15,
+      "status": "exported"
+    },
+    {
+      "role": "doctor",
+      "name": "patient-management",
+      "url": "https://medix-15sd.vercel.app/patient-management",
+      "file": "doctor-patient-management.svg",
+      "interactiveTargets": 11,
+      "status": "exported"
+    },
+    {
+      "role": "doctor",
+      "name": "appointment-management",
+      "url": "https://medix-15sd.vercel.app/appointment-management",
+      "file": "doctor-appointment-management.svg",
+      "interactiveTargets": 15,
+      "status": "exported"
+    },
+    {
+      "role": "doctor",
+      "name": "reports",
+      "url": "https://medix-15sd.vercel.app/reports",
+      "file": "doctor-reports.svg",
+      "interactiveTargets": 9,
+      "status": "exported"
+    },
+    {
+      "role": "doctor",
+      "name": "response-suggestions",
+      "url": "https://medix-15sd.vercel.app/response-suggestions",
+      "file": "doctor-response-suggestions.svg",
+      "interactiveTargets": 21,
+      "status": "exported"
+    },
+    {
+      "role": "doctor",
+      "name": "workflow",
+      "url": "https://medix-15sd.vercel.app/workflow",
+      "file": "doctor-workflow.svg",
+      "interactiveTargets": 14,
+      "status": "exported"
+    },
+    {
+      "role": "doctor",
+      "name": "clinical-decision-support",
+      "url": "https://medix-15sd.vercel.app/cdss",
+      "file": "doctor-clinical-decision-support.svg",
+      "interactiveTargets": 23,
+      "status": "exported"
+    },
+    {
+      "role": "nurse",
+      "name": "dashboard",
+      "url": "https://medix-15sd.vercel.app/",
+      "file": "nurse-dashboard.svg",
+      "interactiveTargets": 9,
+      "status": "exported"
+    },
+    {
+      "role": "nurse",
+      "name": "register-patient",
+      "url": "https://medix-15sd.vercel.app/register-patient",
+      "file": "nurse-register-patient.svg",
+      "interactiveTargets": 15,
+      "status": "exported"
+    },
+    {
+      "role": "nurse",
+      "name": "patient-vitals",
+      "url": "https://medix-15sd.vercel.app/patient-vitals",
+      "file": "nurse-patient-vitals.svg",
+      "interactiveTargets": 17,
+      "status": "exported"
+    },
+    {
+      "role": "nurse",
+      "name": "reports",
+      "url": "https://medix-15sd.vercel.app/reports",
+      "file": "nurse-reports.svg",
+      "interactiveTargets": 9,
+      "status": "exported"
+    },
+    {
+      "role": "patient",
+      "name": "dashboard",
+      "url": "https://medix-15sd.vercel.app/",
+      "file": "patient-dashboard.svg",
+      "interactiveTargets": 12,
+      "status": "exported"
+    },
+    {
+      "role": "patient",
+      "name": "book-appointment",
+      "url": "https://medix-15sd.vercel.app/book-appointment",
+      "file": "patient-book-appointment.svg",
+      "interactiveTargets": 13,
+      "status": "exported"
+    },
+    {
+      "role": "patient",
+      "name": "profile",
+      "url": "https://medix-15sd.vercel.app/profile",
+      "file": "patient-profile.svg",
+      "interactiveTargets": 14,
+      "status": "exported"
+    },
+    {
+      "role": "patient",
+      "name": "patient-queries",
+      "url": "https://medix-15sd.vercel.app/patient-queries",
+      "file": "patient-patient-queries.svg",
+      "interactiveTargets": 14,
+      "status": "exported"
+    },
+    {
+      "role": "patient",
+      "name": "reports",
+      "url": "https://medix-15sd.vercel.app/reports",
+      "file": "patient-reports.svg",
+      "interactiveTargets": 8,
+      "status": "exported"
+    }
+  ]
+}
