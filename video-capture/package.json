@@ -1,0 +1,11 @@
+{
+  "name": "medix-video-capture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture": "node capture.mjs"
+  },
+  "dependencies": {
+    "puppeteer": "^24.20.0"
+  }
+}
