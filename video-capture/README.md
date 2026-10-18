@@ -1,0 +1,52 @@
+# MediX UI capture kit
+
+Captures the **real deployed React UI** in Chromium using Puppeteer. It does not redraw or replace the login screen.
+
+## 1. Install
+
+```bash
+cd video-capture
+npm install
+```
+
+Puppeteer normally downloads a compatible Chrome for Testing. If using system Chromium, set `CHROME_BIN` to its executable path.
+
+## 2. Capture the public login screen
+
+```bash
+npm run capture
+```
+
+Default target: https://medix-15sd.vercel.app
+
+Outputs are written to `video-capture/captures/`:
+- `01-login.png` — browser screenshot at 1920×1080
+- `01-login.svg` — SVG wrapper embedding the exact PNG pixels
+- `capture-manifest.json` — capture metadata
+
+The SVG is a pixel-preserving wrapper, **not** a vectorized or editable recreation of the React interface. A screenshot cannot be converted losslessly into separate text, buttons, and DNA-helix vector layers.
+
+## 3. Capture authenticated screens
+
+Use an account you are authorized to access. Credentials are read from environment variables, not stored in the repository.
+
+macOS/Linux:
+```bash
+MEDIX_EMAIL='your-account@example.com' MEDIX_PASSWORD='your-password' npm run capture
+```
+
+PowerShell:
+```powershell
+$env:MEDIX_EMAIL = 'your-account@example.com'
+$env:MEDIX_PASSWORD = 'your-password'
+npm run capture
+```
+
+This captures routes allowed by the signed-in account's role. Run separately for admin, doctor, nurse, and patient accounts to collect each role's screens; set a different `OUT_DIR` for each run so files are not mixed. Never commit credentials, cookies, tokens, or captured patient data.
+
+## Notes
+
+- The first capture is the actual login screen, including the current DNA helix and branding.
+- The script waits for the app to settle before capture; live network data can make screenshots vary.
+- If authentication requires OTP, CAPTCHA, or a different flow, complete it manually in a local browser and adapt the script rather than bypassing the control.
+- Captures are made only when you run the script in an environment with internet access. This ChatGPT execution environment could not reach the deployed site, so no screenshot files have been generated here.
