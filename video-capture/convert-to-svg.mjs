@@ -89,7 +89,12 @@ try {
       manifest.pages.push({ role: config.role, status: 'skipped-no-credentials' });
       continue;
     }
+    // The previous role's successful login leaves sessionStorage populated, so
+    // navigating to "/" would show its dashboard instead of the login form.
+    // Clear only this capture tab's session before starting the next role.
+    await page.evaluate(() => sessionStorage.clear()).catch(() => {});
     await page.goto(BASE_URL, { waitUntil: 'networkidle2', timeout: 60000 });
+    await wait(500);
     const email = await page.$('input[placeholder*="@"]') || await page.$('input[type="email"]') || await page.$('input[type="text"]');
     const password = await page.$('input[type="password"]');
     if (!email || !password) throw new Error('Login inputs not found. Inspect the current deployed login DOM.');
