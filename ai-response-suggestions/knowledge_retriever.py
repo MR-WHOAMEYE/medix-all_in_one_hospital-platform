@@ -3,6 +3,7 @@ Stage 2: Knowledge Retrieval
 Searches the knowledge base for relevant FAQ articles and fetches patient context.
 """
 import re
+from itertools import islice
 
 
 def retrieve_knowledge(db_collections: dict, category: str, key_topics: list[str],
@@ -24,9 +25,9 @@ def retrieve_knowledge(db_collections: dict, category: str, key_topics: list[str
     bookings_col = db_collections.get("bookings")
     vitals_col = db_collections.get("vitals")
 
-    articles = []
-    patient_context = {}
-    sources = []
+    articles: list[dict[str, object]] = []
+    patient_context: dict[str, object] = {}
+    sources: list[str] = []
 
     # ── Search knowledge base ──
     if knowledge_col is not None:
@@ -114,7 +115,7 @@ def retrieve_knowledge(db_collections: dict, category: str, key_topics: list[str
                 sources.append("Patient vitals")
 
     return {
-        "articles": articles[:8],  # Cap at 8 articles
+        "articles": list(islice(articles, 8)),  # Cap at 8 articles
         "patient_context": patient_context,
         "sources": sources,
     }

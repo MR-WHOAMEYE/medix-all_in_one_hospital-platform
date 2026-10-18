@@ -12,6 +12,7 @@ import os
 import csv
 import random
 import string
+import mongo as mongo_module
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
@@ -27,6 +28,7 @@ from mongo import *
 # Alias for backward compatibility
 users_collection = users_col
 notifications_collection = notifications_col
+_otp_memory_store: dict[str, dict] = {}
 
 # ---------- MongoDB connection ----------
 # MongoDB
@@ -305,30 +307,34 @@ def _generate_otp(length: int = 6) -> str:
 @router.post("/otp/generate")
 def generate_otp(email: str, name: str, current_user: dict = Depends(_get_current_user)):
     """Generate an OTP for patient email verification. Called by nurse/doctor/admin."""
-    from mongo import otp_col
-
-    if otp_col is None:
-        raise HTTPException(status_code=503, detail="Database not available")
+    otp_col = getattr(mongo_module, "otp_col", None)
 
     if current_user["role"] not in ["admin", "doctor", "nurse"]:
         raise HTTPException(status_code=403, detail="Only staff can generate OTPs")
 
     otp_code = _generate_otp()
+    now = datetime.utcnow()
+    record = {
+        "email": email,
+        "name": name,
+        "otp": otp_code,
+        "verified": False,
+        "created_at": now.isoformat(),
+        "expires_at": (now + timedelta(minutes=10)).isoformat(),
+        "generated_by": current_user["email"],
+    }
 
-    # Upsert: one active OTP per email
-    otp_col.update_one(
-        {"email": email},
-        {"$set": {
-            "email": email,
-            "name": name,
-            "otp": otp_code,
-            "verified": False,
-            "created_at": datetime.utcnow().isoformat(),
-            "expires_at": (datetime.utcnow() + timedelta(minutes=10)).isoformat(),
-            "generated_by": current_user["email"],
-        }},
-        upsert=True,
-    )
+    persisted_to_db = False
+    if otp_col is not None:
+        try:
+            # Upsert: one active OTP per email
+            otp_col.update_one({"email": email}, {"$set": record}, upsert=True)
+            persisted_to_db = True
+        except Exception as e:
+            print(f"[WARN] OTP DB write failed, using memory fallback: {e}")
+
+    if not persisted_to_db:
+        _otp_memory_store[email] = record
 
     return {
         "message": "OTP generated",
@@ -341,15 +347,25 @@ def generate_otp(email: str, name: str, current_user: dict = Depends(_get_curren
 @router.post("/otp/verify")
 def verify_otp(request: OTPVerifyRequest, current_user: dict = Depends(_get_current_user)):
     """Verify an OTP entered by the nurse for a patient's email."""
-    from mongo import otp_col
-
-    if otp_col is None:
-        raise HTTPException(status_code=503, detail="Database not available")
+    otp_col = getattr(mongo_module, "otp_col", None)
 
     if current_user["role"] not in ["admin", "doctor", "nurse"]:
         raise HTTPException(status_code=403, detail="Only staff can verify OTPs")
 
-    record = otp_col.find_one({"email": request.email, "verified": False})
+    record = None
+    db_lookup_ok = False
+    if otp_col is not None:
+        try:
+            record = otp_col.find_one({"email": request.email, "verified": False})
+            db_lookup_ok = True
+        except Exception as e:
+            print(f"[WARN] OTP DB read failed, trying memory fallback: {e}")
+
+    if record is None:
+        mem_record = _otp_memory_store.get(request.email)
+        if mem_record and not mem_record.get("verified", False):
+            record = mem_record
+
     if not record:
         raise HTTPException(status_code=404, detail="No pending OTP found for this email")
 
@@ -363,10 +379,22 @@ def verify_otp(request: OTPVerifyRequest, current_user: dict = Depends(_get_curr
         raise HTTPException(status_code=400, detail="Invalid OTP code")
 
     # Mark as verified
-    otp_col.update_one(
-        {"email": request.email},
-        {"$set": {"verified": True, "verified_at": datetime.utcnow().isoformat()}}
-    )
+    verified_at = datetime.utcnow().isoformat()
+    if db_lookup_ok:
+        try:
+            otp_col.update_one(
+                {"email": request.email},
+                {"$set": {"verified": True, "verified_at": verified_at}}
+            )
+        except Exception as e:
+            print(f"[WARN] OTP DB update failed, writing verification to memory fallback: {e}")
+            if request.email in _otp_memory_store:
+                _otp_memory_store[request.email]["verified"] = True
+                _otp_memory_store[request.email]["verified_at"] = verified_at
+    else:
+        if request.email in _otp_memory_store:
+            _otp_memory_store[request.email]["verified"] = True
+            _otp_memory_store[request.email]["verified_at"] = verified_at
 
     return {"message": "Email verified successfully", "email": request.email}
 
