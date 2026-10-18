@@ -82,3 +82,14 @@ npm run convert-svg
 Do not commit credentials or real patient data. You can set `OUT_DIR`, `MEDIX_URL`, `WIDTH`, `HEIGHT`, and `WAIT_MS` to adjust the export.
 
 **Important renderer limitation:** SVG `foreignObject` preserves HTML/CSS appearance in compatible browsers and tools, but it is not a pure vector conversion of every CSS/Three.js effect. The transparent SVG hit targets are independently named and selectable for editing/shot planning; cloning a React DOM does not preserve React event handlers, so the exported SVG is a visual/cinematic asset rather than a fully functioning copy of the web application. Use the live app for real authentication and data actions. Test the SVG in the intended video/editor pipeline because some tools flatten or ignore `foreignObject`.
+
+
+## 5. Validate exported SVG files
+
+After generating the SVGs, run:
+
+```bash
+npm run validate-svg
+```
+
+The validator checks XML parsing, SVG root/dimensions, embedded `foreignObject`, hotspot groups, and attempts to render each SVG in Chromium. It writes `svg-pages/validation-report.json` and PNG previews to `svg-pages/validation-previews/`. Open the PNG previews to visually inspect layout, fonts, images, and clipping. A syntactically valid SVG can still look wrong in an editor that does not support `foreignObject`.
