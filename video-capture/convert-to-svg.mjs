@@ -96,7 +96,34 @@ try {
     await email.click({ clickCount: 3 }); await email.type(config.email);
     await password.type(config.password);
     await page.locator('button[type="submit"]').click();
-    await page.waitForFunction(() => !document.querySelector('input[type="password"]'), { timeout: 30000 });
+
+    // A password field can remain visible when credentials are rejected. Wait for
+    // the actual success token or the inline login error instead of guessing from DOM.
+    let loginState;
+    try {
+      await page.waitForFunction(
+        () => Boolean(sessionStorage.getItem('zi_token')) ||
+          Boolean(document.querySelector('.text-rose-500')),
+        { timeout: 30000 }
+      );
+      loginState = await page.evaluate(() => ({
+        authenticated: Boolean(sessionStorage.getItem('zi_token')),
+        error: document.querySelector('.text-rose-500')?.innerText?.trim() || ''
+      }));
+    } catch {
+      loginState = await page.evaluate(() => ({
+        authenticated: Boolean(sessionStorage.getItem('zi_token')),
+        error: document.querySelector('.text-rose-500')?.innerText?.trim() || ''
+      }));
+    }
+
+    if (!loginState.authenticated) {
+      const reason = loginState.error || 'No auth token appeared within 30 seconds; check API reachability and credentials.';
+      console.warn('Skipping role', config.role, '- login did not succeed:', reason);
+      manifest.pages.push({ role: config.role, status: 'login-failed', reason });
+      continue;
+    }
+
     await wait(WAIT_MS);
     for (const [name, route] of config.routes) {
       await page.goto(BASE_URL + route, { waitUntil: 'networkidle2', timeout: 60000 });
