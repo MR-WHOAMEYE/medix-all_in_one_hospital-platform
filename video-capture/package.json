@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "capture": "node capture.mjs",
-    "convert-svg": "node convert-to-svg.mjs"
+    "convert-svg": "node convert-to-svg.mjs",
+    "validate-svg": "node validate-svg.mjs"
   },
   "dependencies": {
     "puppeteer": "^24.20.0"
